@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatStream</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Header:wght@400;600&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div id="app">
+        <!-- Auth View -->
+        <div id="auth-view" class="view">
+            <div class="auth-container">
+                <div class="auth-box">
+                    <h1 class="logo">ChatStream</h1>
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="login">Login</button>
+                        <button class="tab-btn" data-tab="signup">Signup</button>
+                    </div>
+
+                    <form id="login-form" class="auth-form active">
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="login-email" placeholder="Email" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="login-password" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="btn-primary">Login</button>
+                    </form>
+
+                    <form id="signup-form" class="auth-form">
+                        <div class="input-group">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="signup-username" placeholder="Username" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="signup-email" placeholder="Email" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="signup-password" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="btn-primary">Sign Up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat View -->
+        <div id="chat-view" class="view hidden">
+            <aside class="sidebar">
+                <header class="sidebar-header">
+                    <div class="my-profile" id="my-profile-trigger">
+                        <img src="" alt="My Avatar" id="my-avatar-thumb" class="avatar-thumb">
+                        <span id="my-username-display"></span>
+                    </div>
+                    <button id="logout-btn" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
+                </header>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search users..." id="user-search">
+                </div>
+                <div class="users-list" id="users-list">
+                    <!-- User items will be injected here -->
+                </div>
+            </aside>
+
+            <main class="chat-area">
+                <div id="no-chat-selected" class="no-chat-placeholder">
+                    <i class="fas fa-comments"></i>
+                    <h3>Select a user to start chatting</h3>
+                </div>
+
+                <div id="active-chat-container" class="hidden">
+                    <header class="chat-header">
+                        <div class="chat-user-info">
+                            <img src="" alt="User" id="chat-avatar" class="avatar-sm">
+                            <div>
+                                <h3 id="chat-username">Username</h3>
+                                <span id="chat-status" class="status-indicator">Offline</span>
+                            </div>
+                        </div>
+                    </header>
+
+                    <div class="messages-container" id="messages-container">
+                        <!-- Messages go here -->
+                    </div>
+
+                    <div class="input-area">
+                        <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off">
+                        <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profile-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Edit Profile</h2>
+            <div class="profile-edit-form">
+                <div class="avatar-upload">
+                    <img src="" id="edit-avatar-preview" class="avatar-lg">
+                    <label for="avatar-input" class="upload-btn"><i class="fas fa-camera"></i></label>
+                    <input type="file" id="avatar-input" accept="image/*" hidden>
+                </div>
+                <div class="input-group">
+                    <label>Bio</label>
+                    <textarea id="edit-bio" rows="3" placeholder="Tell us about yourself"></textarea>
+                </div>
+                <!-- Username editing could go here too -->
+                <button id="save-profile-btn" class="btn-primary">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
