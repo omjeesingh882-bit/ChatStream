@@ -46,13 +46,25 @@ const connectDB = async () => {
                 fs.mkdirSync(dbPath, { recursive: true });
             }
 
+            // Remove mongod.lock and WiredTiger.lock if they exist
+            const lockFile = path.join(dbPath, 'mongod.lock');
+            const wtLock = path.join(dbPath, 'WiredTiger.lock');
+
+            try {
+                if (fs.existsSync(lockFile)) fs.unlinkSync(lockFile);
+                if (fs.existsSync(wtLock)) fs.unlinkSync(wtLock);
+                console.log('Cleaned up lock files');
+            } catch (e) {
+                console.error('Failed to cleanup lock files:', e);
+            }
+
             const mongod = await MongoMemoryServer.create({
                 instance: {
                     dbPath: dbPath,
                     storageEngine: 'wiredTiger'
                 },
                 spawn: {
-                    startupTimeout: 20000 // Increase timeout to 20 seconds
+                    startupTimeout: 60000 // 60 seconds
                 }
             });
 
